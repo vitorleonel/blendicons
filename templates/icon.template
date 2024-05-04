@@ -1,0 +1,5 @@
+export function __ICON_NAME__({ size = 24 }: { size?: number; }): JSX.Element {
+    return (
+        __ICON_CONTENT__
+    );
+}
