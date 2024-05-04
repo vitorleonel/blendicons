@@ -14,7 +14,7 @@ yarn add blendicons
 
 ## Usage
 
-```tsx
+```javascript
 import { AAerialTramHangingWithCables } from 'blendicons/icons/regular/AAerialTramHangingWithCables';
 
 function ReactComponent() {
