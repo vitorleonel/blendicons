@@ -38,8 +38,9 @@ export const getIconName = (text: string): string => {
   };
 
   return text
+    .toLowerCase()
     .replace('Icon Free Download', '')
-    .replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/g, '')
+    .replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`€™“©]/g, '')
     .replace(/[áàäâéèëêíìïîóòöôúùüûñç]/g, (matched) => specialCharsMap[matched])
     .replace(/\d/g, (matched) => numberTextMap[matched])
     .trim()
@@ -56,6 +57,7 @@ export const getIconContent = (content: string): string => {
     .replace(/<style>.*<\/style>/gs, '')
     .replace(/class="/g, 'className="')
     .replace('<svg', '<svg width={size} height={size}')
+    .replace('style="enable-background:new 0 0 24 24;"', '')
     .replace('xmlns:xlink', 'xmlnsXlink')
     .replace('xml:space', 'xmlSpace');
 };
