@@ -1,4 +1,4 @@
-import playwright from 'playwright';
+import { Cluster } from 'playwright-cluster';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -6,28 +6,32 @@ import { getIconContent, getIconName } from './utils/misc';
 
 const baseUrl = 'https://blendicons.com/free-icons';
 const iconStyle = process.env.ICON_STYLE || 'regular';
-const amountOfPages = 48;
-const amountPerPage = 500;
+const amountOfPages = 240;
+const amountPerPage = 100;
 const iconElementSelector = 'section.icons_list_section button img';
 
 (async () => {
-  const browser = await playwright.chromium.launch({ headless: true });
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  const cluster = await Cluster.launch({
+    concurrency: Cluster.CONCURRENCY_PAGE,
+    maxConcurrency: 10,
+    playwrightOptions: {
+      headless: true,
+    },
+  });
 
   const iconTemplate = await fs.readFile(
     path.resolve(__dirname, 'templates', 'icon.template'),
     { encoding: 'utf-8' },
   );
 
-  const icons = [];
+  await fs.mkdir(path.resolve(__dirname, `icons`, iconStyle), {
+    recursive: true,
+  });
 
-  for (let index = 1; index <= amountOfPages; index++) {
-    console.log(`Processing ${iconStyle} page ${index} / ${amountOfPages}.`);
+  await cluster.task(async ({ page, data: url }) => {
+    console.log(`Processing ${url}`);
 
-    await page.goto(
-      `${baseUrl}/${iconStyle}?limit=${amountPerPage}&page=${index}`,
-    );
+    await page.goto(url);
     await page.waitForSelector(iconElementSelector);
 
     const pageIconElements = await page.locator(iconElementSelector).all();
@@ -48,22 +52,22 @@ const iconElementSelector = 'section.icons_list_section button img';
       );
 
       await fs.writeFile(
-        path.resolve(__dirname, `icons`, `${iconName}.tsx`),
+        path.resolve(__dirname, `icons`, iconStyle, `${iconName}.tsx`),
         iconTemplate
+          .replace('__ICON_ORIGNAL_NAME__', elementAlt)
           .replace('__ICON_NAME__', iconName)
           .replace('__ICON_CONTENT__', iconContent),
         { encoding: 'utf-8' },
       );
-
-      icons.push(iconName);
     }
+  });
+
+  for (let index = 1; index <= amountOfPages; index++) {
+    cluster.queue(
+      `${baseUrl}/${iconStyle}?limit=${amountPerPage}&page=${index}`,
+    );
   }
 
-  await fs.writeFile(
-    path.resolve(__dirname, `icons`, `index.ts`),
-    icons.map((icon) => `export * from './${icon}';`).join('\n'),
-    { encoding: 'utf-8' },
-  );
-
-  await browser.close();
+  await cluster.idle();
+  await cluster.close();
 })();

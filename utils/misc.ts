@@ -39,8 +39,8 @@ export const getIconName = (text: string): string => {
 
   return text
     .toLowerCase()
-    .replace('Icon Free Download', '')
-    .replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`€™“©]/g, '')
+    .replace('icon free download', '')
+    .replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`€™“©‰]/g, '')
     .replace(/[áàäâéèëêíìïîóòöôúùüûñç]/g, (matched) => specialCharsMap[matched])
     .replace(/\d/g, (matched) => numberTextMap[matched])
     .trim()

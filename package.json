@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/react": "^18.3.1",
     "playwright": "^1.43.1",
+    "playwright-cluster": "^1.0.7",
     "prettier": "^3.2.5",
     "react": "^18.3.1",
     "ts-node": "^10.9.2",

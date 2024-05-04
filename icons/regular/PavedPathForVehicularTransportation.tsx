@@ -1,0 +1,49 @@
+/**
+ * Original name: Paved path for vehicular transportation. Icon Free Download
+ */
+export function PavedPathForVehicularTransportation({
+  size = 24,
+}: {
+  size?: number;
+}): JSX.Element {
+  return (
+    <svg
+      width={size}
+      height={size}
+      id="Layer_1"
+      data-name="Layer 1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 21.5 21.5"
+    >
+      <defs></defs>
+      <path
+        className="cls-1"
+        d="M0,.75C0,.34,.34,0,.75,0H20.75c.41,0,.75,.34,.75,.75V20.75c0,.41-.34,.75-.75,.75H.75c-.41,0-.75-.34-.75-.75V.75Zm1.5,.75V20H20V1.5H1.5Z"
+      />
+      <path
+        className="cls-1"
+        d="M10.75,17.5c.41,0,.75,.34,.75,.75v2.5c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75v-2.5c0-.41,.34-.75,.75-.75Z"
+      />
+      <path
+        className="cls-1"
+        d="M10.75,11.5c.41,0,.75,.34,.75,.75v3c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75v-3c0-.41,.34-.75,.75-.75Z"
+      />
+      <path
+        className="cls-1"
+        d="M10.75,5.5c.41,0,.75,.34,.75,.75v3c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75v-3c0-.41,.34-.75,.75-.75Z"
+      />
+      <path
+        className="cls-1"
+        d="M10.75,0c.41,0,.75,.34,.75,.75V3.25c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75V.75c0-.41,.34-.75,.75-.75Z"
+      />
+      <path
+        className="cls-1"
+        d="M3.75,0c.41,0,.75,.34,.75,.75V20.75c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75V.75c0-.41,.34-.75,.75-.75Z"
+      />
+      <path
+        className="cls-1"
+        d="M17.75,0c.41,0,.75,.34,.75,.75V20.75c0,.41-.34,.75-.75,.75s-.75-.34-.75-.75V.75c0-.41,.34-.75,.75-.75Z"
+      />
+    </svg>
+  );
+}
